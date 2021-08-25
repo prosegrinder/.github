@@ -13,3 +13,5 @@ The following are commonly used config files across Prosegrinder projects.
 - `.prettierrc`: [Prettier](https://prettier.io/) opinionated code formatter.
 - `.prospector.yaml`: [Prospector](https://prospector.landscape.io/en/master/)
   static code analysis for Python.
+- `.pylintrc`: [Pylint](http://pylint.pycqa.org/en/latest/) static code analysis
+  for Python.
