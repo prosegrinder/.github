@@ -13,6 +13,6 @@ jobs:
       - name: Black
         uses: psf/black@stable
       - name: Pylint
-        uses: cclauss/GitHub-Action-for-pylint@0.7.0
+        uses: cclauss/GitHub-Action-for-pylint@06.0
         with:
           args: pip install .; pylint src/**/*.py
