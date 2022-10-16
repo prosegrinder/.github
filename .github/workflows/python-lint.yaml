@@ -4,7 +4,8 @@ on:
   workflow_call:
 
 jobs:
-  lint:
+  python-lint:
+    name: Python Lint
     runs-on: ubuntu-latest
     steps:
       - name: Check Out

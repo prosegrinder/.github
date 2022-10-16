@@ -4,7 +4,8 @@ on:
   workflow_call:
 
 jobs:
-  test:
+  python-test:
+    name: Python Test
     runs-on: ubuntu-latest
     strategy:
       matrix:
