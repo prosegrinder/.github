@@ -2,7 +2,7 @@ name: "Dependabot Batcher"
 on:
   workflow_call:
     secrets:
-      BATCHER_TOKEN:
+      DEPENDABOT_BATCH_TOKEN:
         required: true
 
 jobs:
@@ -13,7 +13,7 @@ jobs:
       - name: "Checkout Repo"
         uses: actions/checkout@v3
         with:
-          token: ${{ secrets.BATCHER_TOKEN }}
+          token: ${{ secrets.DEPENDABOT_BATCH_TOKEN }}
 
       - name: Setup Node
         uses: actions/setup-node@v3.5.1
@@ -23,6 +23,6 @@ jobs:
       - name: "Combine Dependabot PRs"
         uses: "Legal-and-General/dependabot-batcher@v1.0.2"
         with:
-          token: ${{ secrets.BATCHER_TOKEN }}
+          token: ${{ secrets.DEPENDABOT_BATCH_TOKEN }}
           baseBranchName: "main"
           batchPullTitle: "chore(deps): dependabot batch updates"
