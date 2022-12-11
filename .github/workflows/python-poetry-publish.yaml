@@ -66,6 +66,8 @@ jobs:
           submodules: true
       - name: Set up Python
         uses: actions/setup-python@v4
+        with:
+          python-version: "3.x"
       - name: Install Poetry
         uses: snok/install-poetry@v1
         with:
