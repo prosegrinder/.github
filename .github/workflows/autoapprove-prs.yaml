@@ -7,7 +7,7 @@ on:
         type: string
         required: true
     secrets:
-      GITHUB_TOKEN:
+      APPROVAL_TOKEN:
         required: true
 
 permissions:
@@ -22,12 +22,12 @@ jobs:
         id: metadata
         uses: dependabot/fetch-metadata@v1.3.4
         with:
-          github-token: "${{ secrets.GITHUB_TOKEN }}"
+          github-token: "${{ secrets.APPROVAL_TOKEN }}"
       - name: Approve a PR
         run: gh pr review --approve "$PR_URL"
         env:
           PR_URL: ${{github.event.pull_request.html_url}}
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          GITHUB_TOKEN: ${{secrets.APPROVAL_TOKEN}}
   davidlday:
     runs-on: ubuntu-latest
     if: ${{ github.actor == 'davidlday' }}
@@ -36,4 +36,4 @@ jobs:
         run: gh pr review --approve "$PR_URL"
         env:
           PR_URL: ${{github.event.pull_request.html_url}}
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          GITHUB_TOKEN: ${{secrets.APPROVAL_TOKEN}}
