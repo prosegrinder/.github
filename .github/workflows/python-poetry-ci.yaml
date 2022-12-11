@@ -1,0 +1,16 @@
+name: Python Poetry CI
+
+on:
+  workflow_call:
+
+# concurrency:
+#   group: ci-${{ github.ref }}
+#   cancel-in-progress: true
+
+jobs:
+  lint:
+    uses: prosegrinder/.github/.github/workflows/python-lint.yaml@main
+
+  test:
+    needs: lint
+    uses: prosegrinder/.github/.github/workflows/python-poetry-test.yaml@main
