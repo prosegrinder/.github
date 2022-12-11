@@ -1,0 +1,11 @@
+{
+    "name": "Prosegrinder NPM CI Workflow",
+    "description": "Prosegrinder NPM CI starter workflow.",
+    "categories": [
+        "JavaScript",
+        "TypeScript"
+    ],
+    "filePatterns": [
+        "package.json$"
+    ]
+}
