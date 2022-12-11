@@ -1,0 +1,71 @@
+name: Bump, Release, and Publish
+
+on:
+  workflow_call:
+    inputs:
+      newversion:
+        description: "Bump Type (major minor patch)"
+        default: "patch"
+        required: true
+        type: string
+    secrets:
+      VERSION_BUMP_TAG_TOKEN:
+        required: true
+      NPM_ACCESS_TOKEN:
+        required: true
+
+# Note: booleans in reusable workflows are booleans,
+# but are strings in workflow_dispatch and composite actions
+# See: https://github.com/actions/runner/issues/1483#issuecomment-1042393939
+
+# Note: Use this for your workflow
+# on:
+#   workflow_dispatch:
+#     inputs:
+#       newversion:
+#         description: "Bump Type (major minor patch)"
+#         required: true
+#         default: "patch"
+#         type: choice
+#         options:
+#           - patch
+#           - minor
+#           - major
+
+concurrency:
+  group: tag-and-release
+  cancel-in-progress: true
+
+jobs:
+  lint:
+    uses: prosegrinder/.github/.github/workflows/npm-lint.yaml@main
+
+  test:
+    needs: lint
+    uses: prosegrinder/.github/.github/workflows/npm-test.yaml@main
+
+  build-publish-tag-release:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout source code"
+        uses: "actions/checkout@v3"
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.VERSION_BUMP_TAG_TOKEN }}
+      - name: Setup Node.js
+        uses: actions/setup-node@v3.5.1
+        with:
+          node-version: lts/*
+          registry-url: https://registry.npmjs.org/
+      - name: NPM Clean Install
+        run: npm ci
+      - name: Bump, Release, and Publish
+        uses: bcomnes/npm-bump@v2
+        with:
+          git_email: david@davidlday.com
+          git_username: ${{ github.actor }}
+          newversion: ${{ inputs.newversion }}
+          push_version_commit: true
+          github_token: ${{ secrets.VERSION_BUMP_TAG_TOKEN }}
+          npm_token: ${{secrets.NPM_ACCESS_TOKEN}}
