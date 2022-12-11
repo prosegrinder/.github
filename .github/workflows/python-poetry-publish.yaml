@@ -20,23 +20,28 @@ on:
       VERSION_BUMP_TAG_TOKEN:
         required: true
 
-  # workflow_dispatch:
-  #   branches:
-  #     - main
-  #   inputs:
-  #     newversion:
-  #       description: "Bump Type (major minor patch)"
-  #       required: true
-  #       default: "patch"
-  #       type: choice
-  #       options:
-  #         - patch
-  #         - minor
-  #         - major
-  #     testpublish:
-  #       description: "Publish to TestPypi"
-  #       default: false
-  #       type: boolean
+# Note: booleans in reusable workflows are booleans,
+# but are strings in workflow_dispatch and composite actions
+# See: https://github.com/actions/runner/issues/1483#issuecomment-1042393939
+
+# Note: Use this for your workflow
+# workflow_dispatch:
+#   branches:
+#     - main
+#   inputs:
+#     newversion:
+#       description: "Bump Type (major minor patch)"
+#       required: true
+#       default: "patch"
+#       type: choice
+#       options:
+#         - patch
+#         - minor
+#         - major
+#     testpublish:
+#       description: "Publish to TestPypi"
+#       default: false
+#       type: boolean
 
 concurrency:
   group: tag-and-release
@@ -86,7 +91,7 @@ jobs:
           name: dist
           path: dist/*
       - name: Poetry Publish to PyPi Test
-        if: ${{ 'true' == inputs.testpublish }}
+        if: ${{ inputs.testpublish }}
         run: |
           poetry config repositories.testpypi https://test.pypi.org/legacy/
           poetry publish --repository testpypi --no-interaction --skip-existing
