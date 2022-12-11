@@ -1,4 +1,4 @@
-name: Auto-approve PRs
+name: Autoapprove PRs
 
 on:
   workflow_call:
