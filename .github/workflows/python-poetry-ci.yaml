@@ -9,7 +9,7 @@ on:
 
 jobs:
   lint:
-    uses: prosegrinder/.github/.github/workflows/python-lint.yaml@main
+    uses: prosegrinder/.github/.github/workflows/python-poetry-lint.yaml@main
 
   test:
     needs: lint
