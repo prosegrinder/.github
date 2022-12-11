@@ -80,11 +80,11 @@ jobs:
       - name: Poetry Build
         run: |
           poetry build
-      - name: Upload Disttributions
+      - name: Upload Distributions
         uses: actions/upload-artifact@v3
         with:
-          name: dists
-          path: dists/
+          name: dist
+          path: dist/*
       - name: Poetry Publish to PyPi Test
         if: ${{ 'true' == inputs.testpublish }}
         run: |
