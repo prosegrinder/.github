@@ -1,8 +1,14 @@
-name: Dependabot auto-approve
+name: Auto-approve PRs
 
 on:
   workflow_call:
-  pull_request: # <- typical usage
+    inputs:
+      PR_URL:
+        type: string
+        required: true
+    secrets:
+      GITHUB_TOKEN:
+        required: true
 
 permissions:
   pull-requests: write
