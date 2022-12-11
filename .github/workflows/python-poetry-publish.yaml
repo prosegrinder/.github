@@ -116,5 +116,6 @@ jobs:
         uses: ncipollo/release-action@v1
         with:
           tag: ${{ steps.tag-version.outputs.new_tag }}
+          artifacts: "dists/*"
           name: ${{ steps.tag-version.outputs.new_tag }}
           body: ${{ steps.tag-version.outputs.changelog }}
