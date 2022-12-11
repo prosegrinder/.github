@@ -28,9 +28,9 @@ on:
 #           - minor
 #           - major
 
-concurrency:
-  group: tag-and-release
-  cancel-in-progress: true
+# concurrency:
+#   group: tag-and-release
+#   cancel-in-progress: true
 
 jobs:
   lint:

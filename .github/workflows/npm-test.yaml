@@ -1,11 +1,11 @@
-name: Node.js CI
+name: Node.js Test
 
 on:
   workflow_call:
 
-concurrency:
-  group: ci-${{ github.ref }}
-  cancel-in-progress: true
+# concurrency:
+#   group: ci-${{ github.ref }}
+#   cancel-in-progress: true
 
 jobs:
   npm-test:
