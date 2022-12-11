@@ -1,4 +1,4 @@
-name: "Dependabot Batcher: Scheduled"
+name: "Dependabot Batcher"
 on:
   workflow_call:
     secrets:
