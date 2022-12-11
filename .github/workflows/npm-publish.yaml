@@ -14,10 +14,6 @@ on:
       NPM_ACCESS_TOKEN:
         required: true
 
-# Note: booleans in reusable workflows are booleans,
-# but are strings in workflow_dispatch and composite actions
-# See: https://github.com/actions/runner/issues/1483#issuecomment-1042393939
-
 # Note: Use this for your workflow
 # on:
 #   workflow_dispatch:
