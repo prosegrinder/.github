@@ -43,9 +43,9 @@ on:
 #       default: false
 #       type: boolean
 
-concurrency:
-  group: tag-and-release
-  cancel-in-progress: true
+# concurrency:
+#   group: tag-and-release
+#   cancel-in-progress: true
 
 jobs:
   lint:
