@@ -25,4 +25,4 @@ jobs:
         with:
           token: ${{ secrets.DEPENDABOT_BATCH_TOKEN }}
           baseBranchName: "main"
-          batchPullTitle: "chore(deps): dependabot batch updates"
+          batchPullTitle: "patch(deps): dependabot batch updates"
