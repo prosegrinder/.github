@@ -1,0 +1,11 @@
+{
+    "name": "Prosegrinder NPM Publish Workflow",
+    "description": "Prosegrinder NPM Publish starter workflow.",
+    "categories": [
+        "JavaScript",
+        "TypeScript"
+    ],
+    "filePatterns": [
+        "package.json$"
+    ]
+}
