@@ -1,0 +1,11 @@
+{
+    "name": "Prosegrinder Python Poetry CI Workflow",
+    "description": "Prosegrinder Python Poetry CI starter workflow.",
+    "categories": [
+        "Python"
+    ],
+    "filePatterns": [
+        "pyproject.toml$",
+        "poetry.lock$"
+    ]
+}

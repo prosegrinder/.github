@@ -1,0 +1,12 @@
+name: Python Poetry CI
+
+on:
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  python-poetry-ci:
+    uses: prosegrinder/.github/.github/workflows/python-poetry-ci.yaml@main
