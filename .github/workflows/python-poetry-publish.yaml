@@ -120,11 +120,6 @@ jobs:
           custom_tag: ${{ steps.get-new-version.outputs.version }}
           create_annotated_tag: true
           github_token: ${{ secrets.VERSION_BUMP_TAG_TOKEN }}
-      - name: Check out new tag
-        uses: actions/checkout@v3
-        with:
-          ref: ${{ steps.tag-version.outputs.new_tag }}
-          submodules: true
       - name: Create a GitHub release
         uses: ncipollo/release-action@v1
         with:
