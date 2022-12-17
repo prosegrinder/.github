@@ -1,0 +1,78 @@
+name: PyPi Publish
+
+on:
+  workflow_call:
+    inputs:
+      testpublish:
+        description: "Publish to TestPypi"
+        default: false
+        type: boolean
+    secrets:
+      TEST_PYPI_API_TOKEN:
+        required: true
+      PYPI_API_TOKEN:
+        required: true
+      VERSION_BUMP_TAG_TOKEN:
+        required: true
+
+# Note: booleans in reusable workflows are booleans,
+# but are strings in workflow_dispatch and composite actions
+# See: https://github.com/actions/runner/issues/1483#issuecomment-1042393939
+
+# Note: Use this for your workflow
+# on:
+#   push:
+#     tags:
+#       - "v*"
+#   inputs:
+#     testpublish:
+#       description: "Publish to TestPypi"
+#       default: false
+#       type: boolean
+
+jobs:
+  lint:
+    uses: prosegrinder/.github/.github/workflows/poetry-lint.yaml@main
+
+  test:
+    needs: lint
+    uses: prosegrinder/.github/.github/workflows/poetry-test.yaml@main
+
+  pypi-publish:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+          submodules: true
+      - name: Install Poetry
+        uses: snok/install-poetry@v1
+        with:
+          virtualenvs-create: true
+          virtualenvs-in-project: true
+          installer-parallel: true
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          cache: "poetry"
+          python-version: "3.x"
+      - name: Install project
+        run: poetry install --with dev --no-interaction
+      - name: Poetry Build
+        run: |
+          poetry --version
+          poetry build
+      - name: Poetry Publish to PyPi Test
+        if: ${{ inputs.testpublish }}
+        run: |
+          poetry config repositories.testpypi https://test.pypi.org/legacy/
+          poetry publish --repository testpypi --no-interaction --skip-existing
+        env:
+          POETRY_PYPI_TOKEN_TESTPYPI: ${{ secrets.TEST_PYPI_API_TOKEN }}
+      - name: Poetry Publish to PyPi
+        run: |
+          poetry publish --no-interaction
+        env:
+          POETRY_PYPI_TOKEN_PYPI: ${{ secrets.PYPI_API_TOKEN }}

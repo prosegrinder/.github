@@ -1,0 +1,120 @@
+name: Commitizen Bump and Release
+
+on:
+  workflow_call:
+    secrets:
+      VERSION_BUMP_TAG_TOKEN:
+        required: true
+
+# Note: be sure to add release-body.md to .gitignore
+
+# Note: Use this for your workflow
+# on:
+#   push:
+#     branches:
+#       - main
+# concurrency:
+#   group: tag-and-release
+#   cancel-in-progress: true
+
+jobs:
+  lint:
+    uses: prosegrinder/.github/.github/workflows/poetry-lint.yaml@main
+
+  test:
+    needs: lint
+    uses: prosegrinder/.github/.github/workflows/poetry-test.yaml@main
+
+  bump-and-release:
+    if: "!startsWith(github.event.head_commit.message, 'bump:')"
+    runs-on: ubuntu-latest
+    name: "Bump version and create changelog with commitizen"
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+          submodules: true
+          token: "${{ secrets.VERSION_BUMP_TAG_TOKEN }}"
+      - name: Create bump and changelog
+        uses: commitizen-tools/commitizen-action@0.15.1
+        with:
+          github_token: ${{ secrets.VERSION_BUMP_TAG_TOKEN }}
+          changelog_increment_filename: "release-body.md"
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          body_path: "release-body.md"
+          tag_name: ${{ env.REVISION }}
+# build-publish-tag-release:
+#   needs: test
+#   runs-on: ubuntu-latest
+#   steps:
+#     - uses: actions/checkout@v3
+#       with:
+#         persist-credentials: false
+#         fetch-depth: 0
+#         submodules: true
+#     - name: Install Poetry
+#       uses: snok/install-poetry@v1
+#       with:
+#         virtualenvs-create: true
+#         virtualenvs-in-project: true
+#         installer-parallel: true
+#     - name: Set up Python
+#       uses: actions/setup-python@v4
+#       with:
+#         cache: "poetry"
+#         python-version: "3.x"
+#     - name: Bump Version
+#       run: poetry version ${{ inputs.newversion }}
+#     - name: Get New Version
+#       id: get-new-version
+#       run: |
+#         echo "version=$(poetry version -s)" >> $GITHUB_OUTPUT
+#     - name: Install dependencies
+#       run: poetry install --with dev --no-interaction --no-root
+#     - name: Install project
+#       run: poetry install --with dev --no-interaction
+#     - name: Poetry Build
+#       run: |
+#         poetry build
+#     - name: Upload Distributions
+#       uses: actions/upload-artifact@v3
+#       with:
+#         name: dist
+#         path: dist/*
+#     - name: Poetry Publish to PyPi Test
+#       if: ${{ inputs.testpublish }}
+#       run: |
+#         poetry config repositories.testpypi https://test.pypi.org/legacy/
+#         poetry publish --repository testpypi --no-interaction --skip-existing
+#       env:
+#         POETRY_PYPI_TOKEN_TESTPYPI: ${{ secrets.TEST_PYPI_API_TOKEN }}
+#     - name: Poetry Publish to PyPi
+#       run: |
+#         poetry publish --no-interaction
+#       env:
+#         POETRY_PYPI_TOKEN_PYPI: ${{ secrets.PYPI_API_TOKEN }}
+#     - name: Commit & Push changes
+#       uses: actions-js/push@v1.3
+#       with:
+#         author_email: david@davidlday.com
+#         author_name: ${{ github.actor }}
+#         message:
+#           "[skip ci] bumped to ${{ steps.get-new-version.outputs.version }}"
+#         github_token: ${{ secrets.VERSION_BUMP_TAG_TOKEN }}
+#     - name: Tag version
+#       id: tag-version
+#       uses: mathieudutour/github-tag-action@v6.1
+#       with:
+#         custom_tag: ${{ steps.get-new-version.outputs.version }}
+#         create_annotated_tag: true
+#         github_token: ${{ secrets.VERSION_BUMP_TAG_TOKEN }}
+#     - name: Create a GitHub release
+#       uses: ncipollo/release-action@v1
+#       with:
+#         tag: ${{ steps.tag-version.outputs.new_tag }}
+#         artifacts: "dist/*"
+#         name: ${{ steps.tag-version.outputs.new_tag }}
+#         body: ${{ steps.tag-version.outputs.changelog }}
