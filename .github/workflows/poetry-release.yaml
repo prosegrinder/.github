@@ -31,6 +31,7 @@ jobs:
           submodules: true
           token: "${{ secrets.VERSION_BUMP_TAG_TOKEN }}"
       - name: Create bump and changelog
+        id: cz
         uses: commitizen-tools/commitizen-action@0.15.1
         with:
           commit: true
@@ -41,4 +42,4 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           body_path: "release-body.md"
-          tag_name: ${{ env.REVISION }}
+          tag_name: v${{ steps.cz.outputs.version }}
