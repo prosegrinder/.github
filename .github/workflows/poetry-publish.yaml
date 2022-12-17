@@ -12,8 +12,6 @@ on:
         required: true
       PYPI_API_TOKEN:
         required: true
-      VERSION_BUMP_TAG_TOKEN:
-        required: true
 
 # Note: booleans in reusable workflows are booleans,
 # but are strings in workflow_dispatch and composite actions
@@ -24,11 +22,6 @@ on:
 #   push:
 #     tags:
 #       - "v*"
-#   inputs:
-#     testpublish:
-#       description: "Publish to TestPypi"
-#       default: false
-#       type: boolean
 
 jobs:
   lint:
