@@ -25,11 +25,11 @@ Conventional commits will drive versioning via the Python implementation of
 - [Poetry Lint](.github/workflows/poetry-lint.yaml): Runs `pylint` and `black`.
 - [Poetry Test](.github/workflows/poetry-test.yaml): Runs `pytest` tests.
 - [Poetry CI](.github/workflows/poetry-ci.yaml):
-  - Invoked on `push` to PR branch.
+  - Invoke on `push` to PR branch.
   - MUST pass in order to merge PR.
   - Combines Lint and Test into a single workflow.
 - [Poetry Release](.github/workflows/poetry-release.yaml)
-  - Invoked on `push` to `main`, typically via PR merge.
+  - Invoke on `push` to `main`, typically via PR merge.
   - Runs both Lint and Test to ensure project integrity.
   - Bumps the project version and generates a changelog via Commitizen, based on
     Conventional Commits.
@@ -37,7 +37,7 @@ Conventional commits will drive versioning via the Python implementation of
   - Creates a GitHub release based on the tag and the changelog created by
     Commitizen.
 - [Poetry Publish](.github/workflows/poetry-publish.yaml)
-  - Invoked on `tag`, typically via Poetry Release.
+  - Invoke on `tag`, typically via Poetry Release.
   - Builds the project.
   - Optionally publishes to PyPi test. See workflow for details.
   - Publish to PyPi.
