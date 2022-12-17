@@ -30,7 +30,6 @@ Conventional commits will drive versioning via the Python implementation of
   - Combines Lint and Test into a single workflow.
 - [Poetry Release](.github/workflows/poetry-release.yaml)
   - Invoke on `push` to `main`, typically via PR merge.
-  - Runs both Lint and Test to ensure project integrity.
   - Bumps the project version and generates a changelog via Commitizen, based on
     Conventional Commits.
   - Tags the project and pushes changes to main.
