@@ -22,17 +22,13 @@ on:
 #   push:
 #     tags:
 #       - "v*"
+#
+# concurrency:
+#   group: pypi-publish-${{ github.ref }}
+#   cancel-in-progress: true
 
 jobs:
-  lint:
-    uses: prosegrinder/.github/.github/workflows/poetry-lint.yaml@main
-
-  test:
-    needs: lint
-    uses: prosegrinder/.github/.github/workflows/poetry-test.yaml@main
-
   pypi-publish:
-    needs: test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
