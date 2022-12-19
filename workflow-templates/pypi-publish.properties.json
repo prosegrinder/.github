@@ -1,0 +1,11 @@
+{
+  "name": "Prosegrinder Publish to PyPi",
+  "description": "Prosegrinder Publish to PyPi.",
+  "categories": [
+    "Python"
+  ],
+  "filePatterns": [
+    "pyproject.toml$",
+    "poetry.lock$"
+  ]
+}
