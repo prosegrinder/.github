@@ -106,7 +106,7 @@ jobs:
         env:
           POETRY_PYPI_TOKEN_PYPI: ${{ secrets.PYPI_API_TOKEN }}
       - name: Commit & Push changes
-        uses: actions-js/push@v1.3
+        uses: actions-js/push@v1.4
         with:
           author_email: david@davidlday.com
           author_name: ${{ github.actor }}
