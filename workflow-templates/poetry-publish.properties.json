@@ -1,6 +1,6 @@
 {
-  "name": "Prosegrinder Publish to PyPi",
-  "description": "Prosegrinder Publish to PyPi.",
+  "name": "Prosegrinder Poetry Publish to PyPi",
+  "description": "Prosegrinder Poetry Publish to PyPi.",
   "categories": [
     "Python"
   ],
