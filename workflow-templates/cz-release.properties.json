@@ -1,11 +1,11 @@
 {
-  "name": "Prosegrinder Python Bump Version and Create Release",
-  "description": "Prosegrinder Python Bump Version and Create Release.",
+  "name": "Prosegrinder Commitizen Bump Version and Create Release",
+  "description": "Prosegrinder Commitizen Bump Version and Create Release.",
   "categories": [
-    "Python"
+    "Commitizen"
   ],
   "filePatterns": [
     "pyproject.toml$",
-    "poetry.lock$"
+    ".cz.toml$"
   ]
 }
