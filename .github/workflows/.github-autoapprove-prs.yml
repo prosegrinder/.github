@@ -7,7 +7,7 @@ permissions:
 
 jobs:
   autoapprove-prs:
-    uses: .github/workflows/autoapprove-prs.yaml@main
+    uses: prosegrinder/.github/.github/workflows/autoapprove-prs.yaml@main
     with:
       PR_URL: ${{github.event.pull_request.html_url}}
     secrets:
