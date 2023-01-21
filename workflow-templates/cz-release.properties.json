@@ -1,0 +1,11 @@
+{
+  "name": "Prosegrinder Python Bump Version and Create Release",
+  "description": "Prosegrinder Python Bump Version and Create Release.",
+  "categories": [
+    "Python"
+  ],
+  "filePatterns": [
+    "pyproject.toml$",
+    "poetry.lock$"
+  ]
+}
