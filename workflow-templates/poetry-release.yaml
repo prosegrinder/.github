@@ -3,7 +3,7 @@ name: Bump Version and Create Release
 on:
   push:
     branches:
-      - main
+      - $default-branch
 
 jobs:
   release:
