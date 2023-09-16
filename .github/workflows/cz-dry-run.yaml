@@ -2,9 +2,6 @@ name: Commitizen Dry-Run
 
 on:
   workflow_call:
-    secrets:
-      VERSION_BUMP_TAG_TOKEN:
-        required: true
 
 jobs:
   bump-dry-run:
