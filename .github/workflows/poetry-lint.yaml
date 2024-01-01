@@ -18,7 +18,7 @@ jobs:
           virtualenvs-in-project: true
           installer-parallel: true
       - name: Setup Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           cache: "poetry"
           python-version: "3.x"
