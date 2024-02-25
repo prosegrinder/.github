@@ -7,7 +7,7 @@ updates:
       timezone: America/New_York
     open-pull-requests-limit: 10
     commit-message:
-      prefix: "patch"
+      prefix: "ci"
       include: scope
     reviewers:
       - davidlday
