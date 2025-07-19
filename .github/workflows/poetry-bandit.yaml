@@ -1,0 +1,40 @@
+name: Python Poetry MyPy Check
+
+on:
+  workflow_call:
+    inputs:
+      python-version:
+        description: "Python version to use"
+        type: string
+        required: true
+        default: "3.x"
+      src-path:
+        description: "Source path for MyPy"
+        type: string
+        required: true
+        default: "src/**/*.py"
+
+jobs:
+  python-mypy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check Out
+        uses: actions/checkout@v4
+        with:
+          submodules: true
+      - name: Install Poetry
+        uses: snok/install-poetry@v1
+        with:
+          virtualenvs-create: true
+          virtualenvs-in-project: true
+          installer-parallel: true
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          cache: "poetry"
+          python-version: "${{ inputs.python-version }}"
+      - name: Install project
+        run: poetry install --with dev --no-interaction
+      - name: MyPy
+        run: |
+          poetry run bandit --configfile pyproject.toml --recursive ${{inputs.src-path }}
