@@ -1,4 +1,4 @@
-name: Python Poetry MyPy Check
+name: Python Poetry Bandit Check
 
 on:
   workflow_call:
