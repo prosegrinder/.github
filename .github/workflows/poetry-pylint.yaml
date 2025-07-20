@@ -15,7 +15,7 @@ on:
         default: "src/**/*.py"
 
 jobs:
-  python-lint:
+  python-pylint:
     runs-on: ubuntu-latest
     steps:
       - name: Check Out
