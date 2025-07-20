@@ -1,5 +1,8 @@
 name: Python Poetry Black Check
 
+permissions:
+  contents: read
+
 on:
   workflow_call:
     inputs:

@@ -1,5 +1,8 @@
 name: Python Poetry Pylint
 
+permissions:
+  contents: read
+
 on:
   workflow_call:
     inputs:

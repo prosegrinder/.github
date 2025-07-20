@@ -1,5 +1,8 @@
 name: Python Poetry Bandit Check
 
+permissions:
+  contents: read
+
 on:
   workflow_call:
     inputs:
@@ -15,7 +18,7 @@ on:
         default: "src/**/*.py"
 
 jobs:
-  python-mypy:
+  python-bandit:
     runs-on: ubuntu-latest
     steps:
       - name: Check Out
