@@ -6,6 +6,11 @@ on:
       VERSION_BUMP_TAG_TOKEN:
         required: true
 
+# DO NOT USE THIS FOR YOUR WORKFLOW
+# This workflow requires a secret called VERSION_BUMP_TAG_TOKEN
+# and it appears the calling workflow cannot pass it unless
+# it's run by the repo owner or a user with write access.
+
 # Note: be sure to add release-body.md to .gitignore
 
 # Note: Use this for your workflow
@@ -21,7 +26,7 @@ on:
 # Also, qualify the release job to skip on bump
 # jobs:
 #   bump-and-release:
-#    if: "!startsWith(github.event.head_commit.message, 'bump:')"
+#    if: ${{ !startsWith(github.event.head_commit.message, 'bump:') }}
 
 jobs:
   bump-and-release:
