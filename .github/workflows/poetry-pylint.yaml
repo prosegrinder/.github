@@ -6,12 +6,12 @@ on:
       python-version:
         description: "Python version to use"
         type: string
-        required: true
+        required: false
         default: "3.x"
       src-path:
         description: "Source path for Pylint"
         type: string
-        required: true
+        required: false
         default: "src/**/*.py"
 
 jobs:
