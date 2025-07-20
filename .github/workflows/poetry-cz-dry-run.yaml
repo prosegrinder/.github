@@ -1,8 +1,5 @@
 name: Python Poetry CZ Dry-Run
 
-permissions:
-  contents: read
-
 on:
   workflow_call:
     secrets:
