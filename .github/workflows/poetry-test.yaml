@@ -1,7 +1,16 @@
 name: Python Poetry Test
 
+permissions:
+  contents: read
+
 on:
   workflow_call:
+    inputs:
+      test-path:
+        description: "Path to the tests"
+        type: string
+        required: false
+        default: "tests/"
 
 jobs:
   poetry-test:
@@ -28,4 +37,4 @@ jobs:
       - name: Install project
         run: poetry install --with dev --no-interaction
       - name: Run tests
-        run: poetry run pytest tests/
+        run: poetry run pytest ${{ inputs.test-path }}
