@@ -1,36 +1,17 @@
-name: Bump, Release, and Publish
+name: Publish to NPM
 
 on:
-  workflow_call:
-    inputs:
-      newversion:
-        description: "Bump Type (major minor patch)"
-        default: "patch"
-        required: true
-        type: string
-    secrets:
-      VERSION_BUMP_TAG_TOKEN:
-        required: true
-      NPM_ACCESS_TOKEN:
-        required: true
+  push:
+    tags:
+      - "v*"
 
-# Note: Use this for your workflow
-# on:
-#   workflow_dispatch:
-#     inputs:
-#       newversion:
-#         description: "Bump Type (major minor patch)"
-#         required: true
-#         default: "patch"
-#         type: choice
-#         options:
-#           - patch
-#           - minor
-#           - major
+permissions:
+  id-token: write
+  contents: read
 
-# concurrency:
-#   group: tag-and-release
-#   cancel-in-progress: true
+concurrency:
+  group: npm-publish-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   lint:
@@ -40,17 +21,16 @@ jobs:
     needs: lint
     uses: prosegrinder/.github/.github/workflows/npm-test.yaml@main
 
-  build-publish-tag-release:
+  publish:
     needs: test
     runs-on: ubuntu-latest
     steps:
       - name: "Checkout source code"
-        uses: "actions/checkout@v6"
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
-          token: ${{ secrets.VERSION_BUMP_TAG_TOKEN }}
       - name: Setup Node.js
-        uses: actions/setup-node@v6.2.0
+        uses: actions/setup-node@v6
         with:
           node-version: lts/*
           registry-url: https://registry.npmjs.org/
@@ -58,12 +38,7 @@ jobs:
         run: npm ci
       - name: NPM Run Build
         run: npm run build --if-present
-      - name: Bump, Release, and Publish
-        uses: bcomnes/npm-bump@v2
-        with:
-          git_email: david@davidlday.com
-          git_username: ${{ github.actor }}
-          newversion: ${{ inputs.newversion }}
-          push_version_commit: true
-          github_token: ${{ secrets.VERSION_BUMP_TAG_TOKEN }}
-          npm_token: ${{secrets.NPM_ACCESS_TOKEN}}
+      - name: NPM Publish Dry Run
+        run: npm publish --dry-run
+      - name: NPM Publish
+        run: npm publish
