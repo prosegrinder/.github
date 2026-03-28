@@ -1,17 +1,11 @@
 name: Publish to NPM
 
 on:
-  push:
-    tags:
-      - "v*"
+  workflow_call:
 
-permissions:
-  id-token: write
-  contents: read
-
-concurrency:
-  group: npm-publish-${{ github.ref }}
-  cancel-in-progress: true
+# concurrency:
+#   group: npm-publish-${{ github.ref }}
+#   cancel-in-progress: true
 
 jobs:
   lint:
@@ -24,6 +18,9 @@ jobs:
   publish:
     needs: test
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
     steps:
       - name: "Checkout source code"
         uses: actions/checkout@v6
